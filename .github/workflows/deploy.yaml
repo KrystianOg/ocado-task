@@ -2,16 +2,20 @@ name: Build and deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - master
+    branches: [main]
     paths:
       - ".github/workflows/deploy.yml"
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: wrtie
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,25 +27,35 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install react deps
-        run: npm install
+      - name: Install deps
+        run: npm ci
 
-      - name: Build react example
-        working-directory: ./examples/react-ts
+      - name: Lint code
+        run: npm run lint
+
+      - name: Build the site
+        working-directory:
         run: npm run build
 
-      - name: Create combined publish directory
-        run: |
-          mkdir -p gh-pages/docs
-          mkdir -p gh-pages/react-ts
-          cp -r docs/.vitepress/dist/* gh-pages/docs/
-          cp -r examples/react-ts/dist/* gh-pages/react-ts/
-      - name: Add index.html redirect to /docs/
-        run: |
-          echo '<meta http-equiv="refresh" content="0; url=docs/">' > gh-pages/index.html
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
 
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: gh-pages
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
