@@ -8,14 +8,6 @@ export default tseslint.config(
   { ignores: ["dist", "src/*.gen.ts"] },
   tseslint.configs.recommended,
   {
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
-  {
     extends: [js.configs.recommended],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
