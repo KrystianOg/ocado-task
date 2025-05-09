@@ -1,10 +1,25 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Product } from "../types";
+// FIXME: how to rename this so i don't have to use "as"
+import { Product as ProductType } from "../types";
+import { formatPrice } from "../utils/formatting";
 
 export const Route = createFileRoute("/products")({
   component: ProductsList,
 });
+
+function Product({ id, name, price }: ProductType) {
+  const addToCart = (): void => { };
+
+  return (
+    <article style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+      <p>{id}</p>
+      <span>{name}</span>
+      <p>{formatPrice(price)}</p>
+      <button onClick={addToCart}>Dodaj do koszyka</button>
+    </article>
+  );
+}
 
 /**
  *  - [ ] load static products
@@ -12,28 +27,25 @@ export const Route = createFileRoute("/products")({
  *  - [ ] Navigation link to /cart
  */
 function ProductsList() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
 
   useEffect(() => {
     fetch("/products.json").then(async (res) => {
-      const json = (await res.json()) as Product[];
+      const json = (await res.json()) as ProductType[];
       setProducts(json);
     });
   }, []);
 
   return (
-    <ul>
-      {products.map((product) => (
-        <li key={product.id}>
-          <article>
-            <p>{product.id}</p>
-            <p>{product.name}</p>
-            <p>
-              {product.price.main} {product.price.fractional}
-            </p>
-          </article>
-        </li>
-      ))}
-    </ul>
+    <>
+      <a href="/cart">Do koszyka</a>
+      <ul style={{ listStyleType: "none" }}>
+        {products.map((product) => (
+          <li key={product.id}>
+            <Product {...product} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
