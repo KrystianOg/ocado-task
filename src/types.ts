@@ -1,6 +1,6 @@
 export type Price = {
-  main: 2;
-  fractional: 89;
+  main: number;
+  fractional: number;
 };
 
 export type Product = {

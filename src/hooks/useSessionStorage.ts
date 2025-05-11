@@ -16,6 +16,8 @@ export const useSessionStorage = <T>(
       return defaultValue;
     }
 
+    
+
     return JSON.parse(item) as T;
   };
 

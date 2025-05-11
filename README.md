@@ -1,4 +1,7 @@
+  ![CI/CD Pipeline](https://github.com/your-username/your-repo/actions/workflows/deploy.yml/badge.svg)
+
 # Approach
+
 
 ## Running locally:
 
