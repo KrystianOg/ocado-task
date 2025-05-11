@@ -32,7 +32,10 @@ jobs:
         run: npm run lint
 
       - name: Build the site
-        run: npm run build
+        run: NODE_ENV=production npm run build
+
+      - name: Support SPA routing (404 fallback)
+        run: cp dist/index.html dist/404.html
 
       - name: Add CNAME file
         run: echo 'ocado.ogonowski.it' > ./dist/CNAME
