@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { LocalStorageKeys } from "../constants";
 import { Order } from "../utils/order";
 import { useStorage } from "../hooks/useStorage";
@@ -31,7 +31,7 @@ function RouteComponent() {
         <ul>
           {links.map((link) => (
             <li key={link.href}>
-              <a href={link.href}>{link.name}</a>
+              <Link to={link.href}>{link.name}</Link>
             </li>
           ))}
         </ul>
@@ -42,9 +42,7 @@ function RouteComponent() {
         <ul>
           {orders.map((order) => (
             <li key={order.id}>
-              <a href={`/confirmation?orderId=${order.id}`}>
-                Order: {order.id}
-              </a>
+              <a href={`/confirmation?orderId=${order.id}`}>{order.id}</a>
             </li>
           ))}
         </ul>

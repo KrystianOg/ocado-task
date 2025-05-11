@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "../hooks/useCart";
 import { formatPrice } from "../utils/formatting";
 import { createOrder } from "../utils/order";
@@ -25,7 +25,7 @@ function OrderSummaryPage() {
   return (
     <div>
       <header>
-        <a href="/cart">Powrót do koszyka</a>
+        <Link to="/cart"> Powrót do koszyka</Link>
       </header>
       <main>
         <h1>Podsumowanie</h1>
