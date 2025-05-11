@@ -1,9 +1,8 @@
-![GH Actions](https://img.shields.io/github/actions/workflow/status/KrystianOg/ocado-task/deploy.yaml)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/KrystianOg/ocado-task/deploy.yaml)
 
-# Approach
+# Krystian_Ogonowski_Web_Wrocław
 
-## Project overview
+## Approach
 
 To make the task a little bit simpler I'm allowing number operations such as floating point multiplication and division, in real world I'd operate on integers (bigint) or make backend calculate money operations.
 
@@ -32,3 +31,11 @@ Build for production
 ```bash
 npm run build
 ```
+
+## Technologies Used
+
+- Vite - nowadays standard for starting with new frontend apps
+- TypeScript
+- React
+- @tanstack/react-router - production grade routing
+- eslint - mantaining clean, consistent code
