@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useCart } from "../hooks/useCart";
+import { formatPrice } from "../utils/formatting";
+import { createOrder } from "../utils/order";
 
 export const Route = createFileRoute("/order")({
   component: OrderSummaryPage,
@@ -11,5 +14,36 @@ export const Route = createFileRoute("/order")({
  *  - [ ] - Link back to cart
  */
 function OrderSummaryPage() {
-  return <div>Hello "/order"!</div>;
+  const { items } = useCart();
+
+  const handleCreateOrder = () => {
+    const order = createOrder(items);
+
+    window.location.href = `/confirmation?orderId=${encodeURIComponent(order.id)}`;
+  };
+
+  return (
+    <div>
+      <header>
+        <a href="/cart">Powrót do koszyka</a>
+      </header>
+      <main>
+        <h1>Podsumowanie</h1>
+        <ul>
+          {items.map((item) => (
+            <li
+              key={item.id}
+              style={{ display: "flex", alignItems: "center", gap: "2rem" }}
+            >
+              <p>{item.name}</p>
+              <p>{item.quantity}</p>
+              <p>{formatPrice(item.price)}</p>
+            </li>
+          ))}
+        </ul>
+        TODO: koncowa laczna kwota zamowiniea
+        <button onClick={handleCreateOrder}>Złóż zamówienie</button>
+      </main>
+    </div>
+  );
 }

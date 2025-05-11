@@ -3,8 +3,6 @@ name: Build and deploy to GitHub Pages
 on:
   push:
     branches: [main]
-    paths:
-      - ".github/workflows/deploy.yml"
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -12,7 +10,7 @@ on:
 permissions:
   contents: read
   pages: write
-  id-token: wrtie
+  id-token: write
 
 jobs:
   build:
@@ -34,14 +32,12 @@ jobs:
         run: npm run lint
 
       - name: Build the site
-        working-directory:
         run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-
 
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v4

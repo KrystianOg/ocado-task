@@ -1,7 +1,11 @@
-  ![CI/CD Pipeline](https://github.com/your-username/your-repo/actions/workflows/deploy.yml/badge.svg)
+![GH Actions](https://img.shields.io/github/actions/workflow/status/KrystianOg/ocado-task/deploy.yaml)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/KrystianOg/ocado-task/deploy.yaml)
 
 # Approach
 
+## Project overview
+
+To make the task a little bit simpler I'm allowing number operations such as floating point multiplication and division, in real world I'd operate on integers (bigint) or make backend calculate money operations.
 
 ## Running locally:
 

@@ -6,7 +6,15 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   { ignores: ["dist", "src/*.gen.ts"] },
-  tseslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
   {
     extends: [js.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -24,6 +32,7 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
+      "no-unused-vars": "off",
     },
   },
 );
