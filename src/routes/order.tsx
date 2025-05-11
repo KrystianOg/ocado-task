@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "../hooks/useCart";
 import { formatPrice } from "../utils/formatting";
 import { createOrder } from "../utils/order";
+import { mult } from "../utils/currency";
 
 export const Route = createFileRoute("/order")({
   component: OrderSummaryPage,
@@ -10,11 +11,9 @@ export const Route = createFileRoute("/order")({
 /**
  *  - [ ] - read-only view of cart
  *  - [ ] - final total + itemized list
- *  - [ ] - "Place Order" button
- *  - [ ] - Link back to cart
  */
 function OrderSummaryPage() {
-  const { items } = useCart();
+  const { items, total } = useCart();
 
   const handleCreateOrder = () => {
     const order = createOrder(items);
@@ -29,19 +28,36 @@ function OrderSummaryPage() {
       </header>
       <main>
         <h1>Podsumowanie</h1>
-        <ul>
-          {items.map((item) => (
-            <li
-              key={item.id}
-              style={{ display: "flex", alignItems: "center", gap: "2rem" }}
-            >
-              <p>{item.name}</p>
-              <p>{item.quantity}</p>
-              <p>{formatPrice(item.price)}</p>
-            </li>
-          ))}
-        </ul>
-        TODO: koncowa laczna kwota zamowiniea
+        <table className="cart-table">
+          <thead>
+            <tr>
+              <th>Produkt</th>
+              <th>Cena</th>
+              <th>Ilość</th>
+              <th>Suma</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{formatPrice(item.price)}</td>
+                <td>{item.quantity}</td>
+                <td>{formatPrice(mult(item.price, item.quantity))}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="cart-summary">
+          <p>
+            Suma częściowa: <span>{formatPrice(total)}</span>
+          </p>
+          <p>
+            Suma: <span>{formatPrice(total)}</span>
+          </p>
+        </div>
         <button onClick={handleCreateOrder}>Złóż zamówienie</button>
       </main>
     </div>

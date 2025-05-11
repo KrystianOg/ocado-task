@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "../hooks/useCart";
 import { formatPrice } from "../utils/formatting";
 import "../assets/cart-page.css";
+import { mult } from "../utils/currency";
 
 export const Route = createFileRoute("/cart")({
   component: CartPage,
@@ -10,12 +11,6 @@ export const Route = createFileRoute("/cart")({
 // TODO: change list to table
 // FIXME: calculates sum wrongly
 
-/**
- *  - [ ] - display items with quantity selector, item total
- *  - [x] - edit quantity, remove item
- *  - [ ] - shows subtotal and total
- *  - [ ] - links to product list and order summary
- */
 function CartPage() {
   const { items, total, updateQuantity, removeItem } = useCart();
   return (
@@ -24,7 +19,7 @@ function CartPage() {
         <Link to="/products">Powrót do produktów</Link>
       </div>
 
-      <h1>Cart</h1>
+      <h1>Koszyk</h1>
 
       {items.length === 0 && <p>No items in cart</p>}
       {items.length > 0 && (
@@ -66,7 +61,7 @@ function CartPage() {
                       +
                     </button>
                   </td>
-                  <td>{formatPrice(item.price)}</td>
+                  <td>{formatPrice(mult(item.price, item.quantity))}</td>
                   <td>
                     <button onClick={() => removeItem(item.id)}>Remove</button>
                   </td>
@@ -76,10 +71,12 @@ function CartPage() {
           </table>
 
           <div className="cart-summary">
-            <h2>Subtotal</h2>
-            <p>{formatPrice(total)}</p>
-            <h2>Total</h2>
-            <p>{formatPrice(total)}</p>
+            <p>
+              Suma częściowa: <span>{formatPrice(total)}</span>
+            </p>
+            <p>
+              Suma: <span>{formatPrice(total)}</span>
+            </p>
           </div>
           <Link to="/order">Podsumowanie zamówienia</Link>
         </>

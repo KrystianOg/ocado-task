@@ -42,6 +42,7 @@ export function ConfirmationPage() {
           </li>
         ))}
       </ul>
+
       <a href="/products" className="back-to-products">
         Wróć do produktów
       </a>

@@ -1,5 +1,6 @@
 import type { Price } from "../types";
 
 export function formatPrice(price: Price): string {
-  return `${price.main}.${price.fractional}`;
+  const fractional = price.fractional.toString().padStart(2, "0");
+  return `${price.main}.${fractional}`;
 }

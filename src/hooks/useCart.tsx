@@ -2,8 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import type { Product } from "../types";
 import { sum } from "../utils/currency";
 import type { CartItem, CartContextType } from "../types";
-import { LocalStorageKeys } from "../constants";
-import { storageUtil } from "../utils/storageUtil";
+import { storageUtil, LocalStorageKeys } from "../utils/storageUtil";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 

@@ -1,15 +1,25 @@
 import type { Price } from "../types";
 
-export const sum = (prices: Price[]): Price => {
-  const main = prices.reduce((acc, cur) => acc + cur.main, 0);
-  const fractional = prices.reduce((acc, cur) => acc + cur.fractional, 0);
-
-  // TODO: rename these
-  const m = Math.floor(fractional / 100);
-  const f = fractional % 100;
-
+const normalize = (main: number, fractional: number): Price => {
+  const totalFractional = main * 100 + fractional;
   return {
-    main: main + m,
-    fractional: f,
+    main: Math.floor(totalFractional / 100),
+    fractional: totalFractional % 100,
   };
+};
+
+export const sum = (prices: Price[]): Price => {
+  const total = prices.reduce<Price>(
+    (acc, cur) => ({
+      main: acc.main + cur.main,
+      fractional: acc.fractional + cur.fractional,
+    }),
+    { main: 0, fractional: 0 },
+  );
+
+  return normalize(total.main, total.fractional);
+};
+
+export const mult = (price: Price, mult: number): Price => {
+  return normalize(price.main * mult, price.fractional * mult);
 };

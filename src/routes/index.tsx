@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { LocalStorageKeys } from "../constants";
+import { LocalStorageKeys } from "../utils/storageUtil";
 import { Order } from "../utils/order";
 import { useStorage } from "../hooks/useStorage";
 

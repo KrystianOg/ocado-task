@@ -1,6 +1,5 @@
-import { LocalStorageKeys } from "../constants";
 import type { CartItem } from "../types";
-import { storageUtil } from "./storageUtil";
+import { storageUtil, LocalStorageKeys } from "./storageUtil";
 
 export interface Order {
   items: CartItem[];
@@ -26,6 +25,7 @@ export function createOrder(items: CartItem[]): Order {
 
   // some way of storing data, it should be handled by backend
   storageUtil.setItem(localStorage, LocalStorageKeys.ORDERS, orders);
+  storageUtil.setItem(localStorage, LocalStorageKeys.CART, []);
 
   return newOrder;
 }
