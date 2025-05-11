@@ -2,10 +2,10 @@ import { LocalStorageKeys } from "../constants";
 import type { CartItem } from "../types";
 import { storageUtil } from "./storageUtil";
 
-export type Order = {
+export interface Order {
   items: CartItem[];
   id: string;
-};
+}
 
 /**
  * @returns newly created order

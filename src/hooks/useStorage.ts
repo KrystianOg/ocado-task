@@ -8,7 +8,7 @@ export const useStorage = <T>(
 ): [T, (value: T) => void] => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     const item = storageUtil.getItem<T>(storage, key);
-    return item !== null ? item : initialValue;
+    return item ?? initialValue;
   });
 
   const setValue = (value: T) => {

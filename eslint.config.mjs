@@ -1,11 +1,13 @@
-import js from "@eslint/js";
+import { globalIgnores } from "eslint/config";
+import eslint from "@eslint/js";
 import globals from "globals";
+import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", "src/*.gen.ts"] },
+  eslint.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
   {
     languageOptions: {
@@ -15,8 +17,10 @@ export default tseslint.config(
       },
     },
   },
+  tseslint.configs.stylisticTypeChecked,
+  react.configs.flat.recommended,
+  react.configs.flat["jsx-runtime"],
   {
-    extends: [js.configs.recommended],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
@@ -27,6 +31,7 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
     },
     rules: {
+      ...react.configs["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": [
         "warn",
@@ -34,5 +39,17 @@ export default tseslint.config(
       ],
       "no-unused-vars": "off",
     },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
   },
+  globalIgnores([
+    "node_modules",
+    "*.config.mjs",
+    "*.config.js",
+    "dist",
+    "src/*.gen.ts",
+  ]),
 );
